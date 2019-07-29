@@ -2,14 +2,14 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.naive_bayes import ComplementNB
 from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
-from sklearn.decomposition import TruncatedSVD
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import GridSearchCV
+from sklearn.externals import joblib
+from os import path
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import matplotlib.pyplot as plt
 
 
@@ -17,6 +17,17 @@ import matplotlib.pyplot as plt
 data = pd.read_csv('news_backup.csv', sep= ';', index_col=False)
 
 data['merged'] = data['title'].astype(str)+' '+data['content'].astype(str)
+
+# Start with one review:
+text = " ".join(review for review in data.merged)
+
+# Create and generate a word cloud image:
+wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(text)
+# Display the generated image:
+plt.figure()
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis("off")
+plt.show()
 
 X = data.merged
 Y = data.category_name
@@ -72,8 +83,11 @@ print("------------------------")
 
 denemeDF = pd.read_csv('temp.csv', sep=';', index_col=False)
 
-denemeX = ["42 yıldır evli olduğu eşiyle 'ölüm anlaşması' yaptığını anlatan rock yıldızı Alice Cooper"]
+denemeX = ["elo musk"]
 deneme_pred = SVC.predict(denemeX)
 print(deneme_pred)
 
 print("------------------------")
+print("Model Dumping.....")
+joblib.dump(SVC, "model.pkl")
+print("Model Dumped.")
