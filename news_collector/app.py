@@ -7,7 +7,7 @@ from multiprocessing import Process, Manager
 
 
 
-dt_now = datetime.today()-timedelta(days=28)
+dt_now = datetime.today()
 
 class News:
     def __init__(self, category_name, title, content, url):
@@ -92,7 +92,16 @@ from nltk.corpus import stopwords
 from snowballstemmer import TurkishStemmer
 
 download('stopwords')
-
+stopwords = list(stopwords.words('turkish'))
+newStop = ['bir', 'ol', 'ola', 'belki', 'olur', 'bugün', 'yarın', 'şimdi', 'mu', 'onlar','seksen','ama','trilyon','buna'
+,'bizim','şeyden','yirmi','altı','iki','seni','doksan','dört','bunun','ki','nereye','altmış','hem','milyon','kez','otuz','beş'
+,'elli','bizi','da','sekiz','ve','çok','bu','veya','ya','kırk','onların','ona','bana','yetmiş','milyar','þunu'
+,'senden','birşeyi','dokuz','yani','kimi','þeyler','kim','neden','senin','yedi','niye','üç','şey','mı','tüm','onlari'
+,'bunda','ise','þundan','hep','þuna','bin','ben','ondan','kimden','bazı','belki','ne','bundan','gibi','de','onlardan','sizi','sizin'
+,'daha','niçin','þunda','bunu','beni','ile','şu','şeyi','sizden','defa','biz','için','dahi','siz','nerde','kime','birþey'
+,'birkez','her','biri','on','mü','diye','acaba','sen','en','hepsi','bir','bizden','sanki','benim','nerede','onu','benden'
+,'yüz','birkaç','çünkü','nasýl','hiç','katrilyon']
+stopwords.extend(newStop)
 
 temp = []
 snow = TurkishStemmer()
@@ -108,10 +117,10 @@ for eachNew in all_news:
     eachNew.content = re.sub(r'[.|:|´|,|)|(|\|/]', r' ', eachNew.content)  # Removing Punctuations
 
     words = [snow.stemWord(word) for word in eachNew.title.split() if
-             word not in set(stopwords.words('turkish'))]  # Stemming and removing stopwords
+             word not in stopwords]  # Stemming and removing stopwords
     eachNew.title = ' '.join(words)
     words = [snow.stemWord(word) for word in eachNew.content.split() if
-             word not in set(stopwords.words('turkish'))]
+             word not in stopwords]
     eachNew.content = ' '.join(words)
 
 

@@ -10,7 +10,14 @@ import re
 from nltk.corpus import stopwords
 from snowballstemmer import TurkishStemmer
 stopwords = list(stopwords.words('turkish'))
-newStop = ['bir', 'ol', 'ola', 'belki', 'olur', 'bugün', 'yarın', 'şimdi']
+newStop = ['bir', 'ol', 'ola', 'belki', 'olur', 'bugün', 'yarın', 'şimdi', 'mu', 'onlar','seksen','ama','trilyon','buna'
+,'bizim','şeyden','yirmi','altı','iki','seni','doksan','dört','bunun','ki','nereye','altmış','hem','milyon','kez','otuz','beş'
+,'elli','bizi','da','sekiz','ve','çok','bu','veya','ya','kırk','onların','ona','bana','yetmiş','milyar','þunu'
+,'senden','birşeyi','dokuz','yani','kimi','þeyler','kim','neden','senin','yedi','niye','üç','şey','mı','tüm','onlari'
+,'bunda','ise','þundan','hep','þuna','bin','ben','ondan','kimden','bazı','belki','ne','bundan','gibi','de','onlardan','sizi','sizin'
+,'daha','niçin','þunda','bunu','beni','ile','şu','şeyi','sizden','defa','biz','için','dahi','siz','nerde','kime','birþey'
+,'birkez','her','biri','on','mü','diye','acaba','sen','en','hepsi','bir','bizden','sanki','benim','nerede','onu','benden'
+,'yüz','birkaç','çünkü','nasýl','hiç','katrilyon']
 stopwords.extend(newStop)
 while True:
     print("Enter article:")
