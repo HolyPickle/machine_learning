@@ -5,26 +5,26 @@ import matplotlib.pyplot as plt
 print("Loading Model...")
 model = joblib.load("model.pkl")
 print("Model Loaded.")
-
+import re
+# from nltk import download
+from nltk.corpus import stopwords
+from snowballstemmer import TurkishStemmer
+stopwords = list(stopwords.words('turkish'))
+newStop = ['bir', 'ol', 'ola', 'belki', 'olur', 'bugün', 'yarın', 'şimdi']
+stopwords.extend(newStop)
 while True:
     print("Enter article:")
     X = input()
     if (X == '0'):
         break
-    import re
-    #from nltk import download
-    from nltk.corpus import stopwords
-    from snowballstemmer import TurkishStemmer
-    #download('stopwords')
     snow = TurkishStemmer()
     X = X.lower()
     cleanr = re.compile('<.*?>')
     X = re.sub(cleanr, ' ', X)
     X = re.sub(r'[?|!|:|´|\'|"|#]', r'', X)
     X = re.sub(r'[.|,|)|´|:|(|\|/]', r' ', X)
-
     words = [snow.stemWord(word) for word in X.split() if
-             word not in set(stopwords.words('turkish'))]  # Stemming and removing stopwords
+             word not in stopwords]  # Stemming and removing stopwords
     X = ' '.join(words)
 
     text = X
